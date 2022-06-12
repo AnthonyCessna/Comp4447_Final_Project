@@ -5,4 +5,6 @@
 /lib64
 /share
 pyvenv.cfg
-touch .gitignore
+RedditAuthentication.py
+__pycache__/RedditAuthentication.cpython-38.pyc
+__pycache__/redditAuthentication.cpython-38.pyc
