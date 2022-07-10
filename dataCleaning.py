@@ -6,6 +6,8 @@ from nltk.tokenize import word_tokenize
 from nltk.corpus import stopwords
 from wordcloud import WordCloud
 import matplotlib.pyplot as plt
+import datetime
+import pytz
 nltk.download('punkt')
 nltk.download('stopwords')
 nltk.download('wordnet')
@@ -48,6 +50,15 @@ def main():
     plt.imshow(wordcloud, interpolation='bilinear')
     plt.axis("off")
     plt.savefig("mygraph.png")
+
+    # next I want to convert the time since UTC to us central time for analysis
+
+    def convert_time(row):
+        time = datetime.datetime.fromtimestamp(row)
+        time = time.astimezone(pytz.timezone('US/Central')).strftime('%Y-%m-%d %H:%M:%S %Z%z')
+        return time
+
+    posts_df["time"] = posts_df["created_utc"].apply(lambda x: convert_time(x))
 
     posts_df.to_csv("RedditDataCleaned.csv")
 
