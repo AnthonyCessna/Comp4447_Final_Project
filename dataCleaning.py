@@ -55,7 +55,7 @@ def main():
 
     def convert_time(row):
         time = datetime.datetime.fromtimestamp(row)
-        time = time.astimezone(pytz.timezone('US/Central')).strftime('%Y-%m-%d %H:%M:%S %Z%z')
+        time = time.astimezone(pytz.timezone('US/Central')).strftime('%H')
         return time
 
     posts_df["time"] = posts_df["created_utc"].apply(lambda x: convert_time(x))
