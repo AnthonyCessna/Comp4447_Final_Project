@@ -32,8 +32,18 @@ def main():
         else:
             return 'neu'
 
-    posts_df['comp_score'] = posts_df['compound'].apply(lambda x: sentiment(x))
+    def section_day(row):
+        if row >= 6 and row <= 11:
+            return "Morning"
+        elif row >= 12 and row <= 17:
+            return "Afternoon"
+        elif row >= 18 and row <= 23:
+            return "Evening"
+        else:
+            return "Night"
 
+    posts_df['comp_score'] = posts_df['compound'].apply(lambda x: sentiment(x))
+    posts_df['Section_of_Day'] = posts_df['time'].apply(lambda x: section_day(x))
     posts_df.to_csv("RedditDataCleaned.csv")
 
     plt.figure(figsize = (20,8))
