@@ -1,9 +1,21 @@
-import nltk
 import pandas as pd
+import seaborn as sns
+import numpy as np
+import nltk
+import contractions
+from nltk.stem import WordNetLemmatizer
+from nltk.tokenize import word_tokenize
+from nltk.corpus import stopwords
+from wordcloud import WordCloud
+import matplotlib.pyplot as plt
+import datetime
+import pytz
+nltk.download('punkt')
+nltk.download('stopwords')
+nltk.download('wordnet')
+nltk.download('omw-1.4')
 nltk.download('vader_lexicon')
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
-import matplotlib.pyplot as plt
-import seaborn as sns
 
 def main():
     sid = SentimentIntensityAnalyzer()
@@ -51,12 +63,11 @@ def main():
     ax = sns.violinplot(x="time", y="compound", data=posts_df,
                         inner=None, color=".8")
 
-    ax = sns.pointplot(x="time", y="compound", data=posts_df, ci = None)
+    ax = sns.pointplot(x="time", y="compound", data=posts_df, ci = None, estimator=np.median)
 
-    ax = sns.stripplot(x="time", y="compound", data=posts_df, order = 
-                    ["06", "07", "08", "09","10","11", "12", "13", "14", "15", "16", "17", "18", "19", 
-                        "20", "21", "22", "23", "00", "01", "02", "03", "04", "05"], jitter = True)
+    ax = sns.stripplot(x="time", y="compound", data=posts_df, jitter = True)
 
+    ax.set( xlabel = "Hour", ylabel = "Sentiment Score", title='Post sentiment over the course of a day')
 
 
 if __name__ == '__main__':
